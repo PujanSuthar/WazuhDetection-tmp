@@ -1,0 +1,29 @@
+#PrivEsc
+
+-a always,exit -F arch=b64 -C auid!=uid -S execve -k T1166_Seuid_and_Setgid
+<____________info___________>
+-a always,exit: This part of the rule specifies that the audit event should always be recorded when the conditions are met.
+-F arch=b64: This specifies that the rule is applicable to 64-bit architectures.
+-C auid!=uid: This condition checks if the audit user ID (auid) is not equal to the user ID (uid). It means that the rule will be triggered when the user initiating the system call (execve) is different from the user's original login ID.
+-S execve: This condition specifies that the rule applies to the execve system call, which is used to execute a new program.
+-k T1166_Seuid_and_Setgid: This sets a unique key identifier (T1166_Seuid_and_Setgid) for the rule. Keys are used to associate multiple rules or events with a specific purpose or detection method. In this case, T1166 corresponds to a specific technique or tactic as defined by the MITRE ATT&CK framework. "Seuid_and_Setgid" implies that this rule is related to changes in the effective user ID and group ID.
+<____________info___________>
+
+
+-a always,exit -F arch=b64 -S setuid -S setgid -S setreuid -S setregid -k T1166_Seuid_and_Setgid
+<____________info___________>
+Similar to the first rule, this rule captures events related to changes in user and group IDs but for different system calls.
+-S setuid -S setgid -S setreuid -S setregid: These conditions specify that the rule applies to the setuid, setgid, setreuid, and setregid system calls. These calls are often used to change the effective user and group IDs of a process.
+-k T1166_Seuid_and_Setgid: Again, it associates this rule with the same key identifier as the first rule, indicating that both rules are part of the same detection mechanism related to privilege escalation.
+<____________info___________>
+
+
+
+
+
+
+
+#Command Execution
+-a always,exit -F arch=b64 -S execve
+
+
